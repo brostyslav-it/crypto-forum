@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         Auth::login(User::create($validatedUser));
             
-        return to_route('profile_view');
+        return to_route('profile.view');
     }
 
     public function login(): RedirectResponse
@@ -34,7 +34,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:8',
         ]))) {
-            return to_route('profile_view');
+            return to_route('profile.view');
         }
 
         return redirect()->back()->withErrors(['auth_failed' => 'Wrong email or password']);
@@ -47,6 +47,6 @@ class AuthController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return to_route('login_view');
+        return to_route('login.view');
     }
 }

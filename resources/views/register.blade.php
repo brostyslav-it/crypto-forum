@@ -4,7 +4,7 @@
     <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6 mt-6">
         <h1 class="text-2xl font-bold text-center text-gray-700 mb-6">Register</h1>
 
-        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('register.post') }}" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-4">

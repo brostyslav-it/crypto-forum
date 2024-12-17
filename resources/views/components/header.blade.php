@@ -1,37 +1,51 @@
-<header class="w-full bg-gray-900 text-white shadow-md">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="/" class="text-2xl font-bold">CryptoForum</a>
+<header class="w-full bg-gray-900 text-white shadow-lg">
+    <div class="container mx-auto px-6 py-6 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/">
+                <img src="/logo/btc.png" alt="Logo" class="w-10 h-10 object-cover">
+            </a>
+            <a href="/" class="text-3xl font-extrabold tracking-wide">CryptoForum</a>
+        </div>
 
         <button class="block lg:hidden focus:outline-none" id="nav-toggle">
-            <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M4 6h16M4 12h16m-7 6h7"/>
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="35" viewBox="0 0 50 50" style="fill:#FFFFFF;">
+                <path d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 Z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 Z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 Z"></path>
             </svg>
         </button>
 
-        <nav class="hidden lg:flex space-x-4" id="nav-menu">
+        <nav class="hidden lg:flex items-center space-x-6">
             @if (auth()->check())
-                <form action="{{ route('logout') }}" method="POST">
+                <x-nav-link-desktop href="{{ route('profile.view') }}">Profile</x-nav-link-desktop>
+                <form action="{{ route('logout.post') }}" method="POST" class="inline">
                     @csrf
-                    <button class="hover:text-blue-400 transition">Logout</span>
+                    <button class="hover:text-blue-400 transition">Logout</button>
                 </form>
             @else
-                <x-nav-link-desktop href="{{ route('login_view') }}">Login</x-nav-link-desktop>
-                <x-nav-link-desktop href="{{ route('register_view') }}">Register</x-nav-link-desktop>
+                <x-nav-link-desktop href="{{ route('login.view') }}">Login</x-nav-link-desktop>
+                <x-nav-link-desktop href="{{ route('register.view') }}">Register</x-nav-link-desktop>
             @endif
         </nav>
     </div>
 
-    <div class="lg:hidden" id="mobile-menu" style="display: none;">
-        <nav class="px-6 py-4 bg-gray-800 space-y-2">
+    <div class="lg:hidden bg-gray-800" id="mobile-menu" style="display: none;">
+        <nav class="space-y-4 px-6 py-4">
             @if (auth()->check())
-                <form action="{{ route('logout') }}" method="POST">
+                <x-nav-link-mobile href="{{ route('profile.view') }}">Profile</x-nav-link-mobile>
+                <form action="{{ route('logout.post') }}" method="POST">
                     @csrf
-                    <button class="hover:text-blue-400 transition">Logout</span>
+                    <button class="hover:text-blue-400 transition">Logout</button>
                 </form>
             @else
-                <x-nav-link-mobile href="{{ route('login_view') }}">Login</x-nav-link-mobile>
-                <x-nav-link-mobile href="{{ route('register_view') }}">Register</x-nav-link-mobile>
+                <x-nav-link-mobile href="{{ route('login.view') }}">Login</x-nav-link-mobile>
+                <x-nav-link-mobile href="{{ route('register.view') }}">Register</x-nav-link-mobile>
             @endif
         </nav>
     </div>
+
+    <script>
+        document.getElementById('nav-toggle').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.style.display = (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') ? 'block' : 'none';
+        });
+    </script>
 </header>

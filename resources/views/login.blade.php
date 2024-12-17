@@ -8,7 +8,7 @@
             <x-form-error>{{ $message }}</x-form-error>
         @enderror
 
-        <form method="POST" action="{{ route('login') }}" class="mt-4">
+        <form method="POST" action="{{ route('login.post') }}" class="mt-4">
             @csrf
     
             <div class="mb-4">

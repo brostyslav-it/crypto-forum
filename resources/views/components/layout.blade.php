@@ -9,11 +9,5 @@
 <body class="bg-gray-100 flex flex-col items-center min-h-screen">
 <x-header />
 {{ $slot }}
-<script>
-    document.getElementById('nav-toggle').addEventListener('click', () => {
-        const menu = document.getElementById('mobile-menu');
-        menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-    });
-</script>
 </body>
 </html>
