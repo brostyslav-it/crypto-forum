@@ -7,7 +7,7 @@
 
             <div class="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:space-x-12">
                 <div class="mb-8 lg:mb-0">
-                    <img src="{{ auth()->user()->avatar }}"
+                    <img src="/{{ auth()->user()->avatar }}"
                          alt="Profile Picture"
                          class="w-48 h-48 lg:w-56 lg:h-56 rounded-full object-cover border-8 border-gray-300 shadow-lg">
                 </div>

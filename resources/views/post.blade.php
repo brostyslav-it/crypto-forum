@@ -45,7 +45,7 @@
                     </label>
                     <span id="file-name" class="ml-4 text-gray-500">No file chosen</span>
                 </div>
-                <input type="file" name="image" id="image" class="hidden" onchange="updateFileName()">
+                <input type="file" accept="image/png, image/gif, image/jpeg" name="image" id="image" class="hidden" onchange="updateFileName()">
                 @error('image')
                 <x-form-error>{{ $message }}</x-form-error>
                 @enderror
