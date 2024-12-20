@@ -16,25 +16,40 @@
             {{ $post->content }}
         </div>
 
-        <div class="flex items-center space-x-4 text-gray-600 mb-6">
-            <div class="flex items-center gap-2 cursor-pointer transition-shadow">
-                <x-like-empty />
-                <span>{{ $post->likes->count() }}</span>
+        @can('modify-post', $post)
+            <div class="bg-blue-100 p-4 rounded-lg mb-6">
+                <div class="flex justify-center space-x-10">
+                    <a href="{{ route('post.edit', $post->id) }}" class="text-blue-500 hover:text-blue-700"><x-edit /></a>
+                    <form action="{{ route('post.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 hover:text-red-700"><x-delete /></button>
+                    </form>
+                </div>
             </div>
+        @endcan
 
-            <div class="flex items-center gap-2">
-                <x-dislike-empty />
-                <span>{{ $post->dislikes->count() }}</span>
-            </div>
+        <div class="bg-gray-100 p-4 rounded-lg mb-6">
+            <div class="flex justify-center space-x-10 text-gray-600">
+                <div class="flex items-center gap-2 cursor-pointer transition-shadow">
+                    <x-like-empty />
+                    <span>{{ $post->likes->count() }}</span>
+                </div>
 
-            <div class="flex items-center gap-2">
-                <x-comment />
-                <span>{{ $post->comments->count() }}</span>
+                <div class="flex items-center gap-2">
+                    <x-dislike-empty />
+                    <span>{{ $post->dislikes->count() }}</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <x-comment />
+                    <span>{{ $post->comments->count() }}</span>
+                </div>
             </div>
         </div>
 
         <div class="mt-8">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Comments {{ $post->comments->count() }}</h2>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Comments ({{ $post->comments->count() }})</h2>
 
             @if($post->comments->isEmpty())
                 <p class="text-gray-600 italic">No comments yet. Be the first to comment!</p>
@@ -51,6 +66,16 @@
                                 <p class="text-gray-700">{{ $comment->content }}</p>
                                 <p class="text-sm text-gray-500 mt-2">{{ $comment->created_at->diffForHumans() }}</p>
                             </div>
+
+                            @can('delete-comment', $comment)
+                                <div class="ml-4">
+                                    <form action="{{ route('comment.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"><x-delete /></button>
+                                    </form>
+                                </div>
+                            @endcan
                         </div>
                     @endforeach
                 </div>
