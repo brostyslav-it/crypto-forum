@@ -14,7 +14,6 @@ class CommentController extends Controller
         if (!Auth::check()) {
             abort(403);
         }
-
         Comment::create([
             ...request()->validate([
                 'content' => 'required|string|max:500',
