@@ -14,17 +14,17 @@ class AuthController extends Controller
     {
         $validatedUser = request()->validate([
             'email' => 'required|string|email|max:255|unique:users',
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|no_forbidden_words',
             'avatar' => 'nullable|image|max:8092',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $validatedUser['avatar'] = request()->hasFile('avatar') 
-            ? request()->file('avatar')->store('avatars', 'public_uploads') 
+        $validatedUser['avatar'] = request()->hasFile('avatar')
+            ? request()->file('avatar')->store('avatars', 'public_uploads')
             : self::DEFAULT_AVATAR;
 
         Auth::login(User::create($validatedUser));
-            
+
         return to_route('profile.view');
     }
 

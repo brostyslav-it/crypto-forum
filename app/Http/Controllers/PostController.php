@@ -25,8 +25,8 @@ class PostController extends Controller
         }
         Post::create([
             ...$request->validate([
-                'title' => 'required|string|max:255',
-                'content' => 'required|string|max:5000',
+                'title' => 'required|string|max:255|no_forbidden_words',
+                'content' => 'required|string|max:5000|no_forbidden_words',
                 'category_id' => 'required|exists:categories,id',
                 'image' => 'nullable|image|max:2048',
             ]),
@@ -55,8 +55,8 @@ class PostController extends Controller
         Gate::authorize('modify-post', $post);
 
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'title' => 'required|string|max:255|no_forbidden_words',
+            'content' => 'required|string|no_forbidden_words',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|max:2048',
         ]);

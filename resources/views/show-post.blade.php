@@ -103,7 +103,7 @@
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <div class="mb-4">
                         <x-label for="comment">Your Comment</x-label>
-                        <textarea id="comment" name="content" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                        <textarea id="comment" name="content" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>{{ old('content') }}</textarea>
                         @error('content')
                         <x-form-error>{{ $message }}</x-form-error>
                         @enderror
