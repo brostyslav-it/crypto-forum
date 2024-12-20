@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DislikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Models\Category;
@@ -26,10 +27,8 @@ Route::controller(CommentController::class)->group(function () {
     Route::delete('/comment/{comment}', 'destroy')->name('comment.destroy');
 });
 
-Route::controller(LikeController::class)->group(function () {
-    Route::post('/like/post/{post}', 'store')->name('like.store');
-    Route::delete('/like/post/{post}', 'destroy')->name('like.destroy');
-});
+Route::post('/like/post/{post}', [LikeController::class, 'store'])->name('like.store');
+Route::post('/dislike/post/{post}', [DislikeController::class, 'store'])->name('dislike.store');
 
 Route::view('/', 'posts', ['categories' => Category::all()])->name('posts.view');
 Route::view('/post', 'post', ['categories' => Category::all()])->name('post.view');

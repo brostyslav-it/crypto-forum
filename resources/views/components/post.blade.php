@@ -2,6 +2,7 @@
     <h2 class="text-2xl font-bold text-gray-800 mb-3">
         {{ $post->title }}
     </h2>
+
     <p class="text-gray-600 mb-4">
         {{ Str::limit($post->content, 150) }}
         @if(strlen($post->content) > 150)
@@ -12,20 +13,24 @@
 
     <div class="flex items-center space-x-4 mb-4">
         <div class="flex items-center space-x-1 text-gray-500">
-            @if(auth()->user()->likes->contains('post_id', $post->id))
-                <x-like-filled/>
-            @else
-                <x-like-empty/>
-            @endif
-            <span>{{ $post->likes->count() }}</span>
+            <section id="like-for-{{ $post->id }}">
+                @if(auth()->user()->likes->contains('post_id', $post->id))
+                    <x-like-filled onclick="like({{ $post->id }})"/>
+                @else
+                    <x-like-empty onclick="like({{ $post->id }})"/>
+                @endif
+            </section>
+            <span id="like-count-{{ $post->id }}">{{ $post->likes->count() }}</span>
         </div>
         <div class="flex items-center space-x-1 text-gray-500">
-            @if(auth()->user()->dislikes->contains('post_id', $post->id))
-                <x-dislike-filled/>
-            @else
-                <x-dislike-empty/>
-            @endif
-            <span>{{ $post->dislikes->count() }}</span>
+            <section id="dislike-for-{{ $post->id }}">
+                @if(auth()->user()->dislikes->contains('post_id', $post->id))
+                    <x-dislike-filled onclick="dislike({{ $post->id }})"/>
+                @else
+                    <x-dislike-empty onclick="dislike({{ $post->id }})"/>
+                @endif
+            </section>
+            <span id="dislike-count-{{ $post->id }}">{{ $post->dislikes->count() }}</span>
         </div>
         <div class="flex items-center space-x-1 text-gray-500">
             <x-comment/>

@@ -30,23 +30,28 @@
         @endcan
 
         <div class="bg-gray-100 p-4 rounded-lg mb-6">
+            @csrf
             <div class="flex justify-center space-x-10 text-gray-600">
                 <div class="flex items-center gap-2 cursor-pointer transition-shadow">
-                    @if(auth()->user()->likes->contains('post_id', $post->id))
-                        <x-like-filled/>
-                    @else
-                        <x-like-empty/>
-                    @endif
-                    <span>{{ $post->likes->count() }}</span>
+                    <section id="like-for-{{ $post->id }}">
+                        @if(auth()->user()->likes->contains('post_id', $post->id))
+                            <x-like-filled onclick="like({{ $post->id }})"/>
+                        @else
+                            <x-like-empty onclick="like({{ $post->id }})"/>
+                        @endif
+                    </section>
+                    <span id="like-count-{{ $post->id }}">{{ $post->likes->count() }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    @if(auth()->user()->dislikes->contains('post_id', $post->id))
-                        <x-dislike-filled/>
-                    @else
-                        <x-dislike-empty/>
-                    @endif
-                    <span>{{ $post->dislikes->count() }}</span>
+                    <section id="dislike-for-{{ $post->id }}">
+                        @if(auth()->user()->dislikes->contains('post_id', $post->id))
+                            <x-dislike-filled onclick="dislike({{ $post->id }})"/>
+                        @else
+                            <x-dislike-empty onclick="dislike({{ $post->id }})"/>
+                        @endif
+                    </section>
+                    <span id="dislike-count-{{ $post->id }}">{{ $post->dislikes->count() }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
