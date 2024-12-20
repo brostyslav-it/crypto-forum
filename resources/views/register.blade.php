@@ -53,12 +53,4 @@
             </div>
         </form>
     </div>
-
-    <script>
-        function updateFileName() {
-            const input = document.getElementById('avatar');
-            const fileName = input.files.length ? input.files[0].name : 'No file chosen';
-            document.getElementById('file-name').textContent = fileName;
-        }
-    </script>
 </x-layout>
