@@ -5,21 +5,30 @@
     <p class="text-gray-600 mb-4">
         {{ Str::limit($post->content, 150) }}
         @if(strlen($post->content) > 150)
-            <span class="text-blue-500 font-semibold">... <a href="{{ route('post.show', $post->id) }}">Read more</a></span>
+            <span class="text-blue-500 font-semibold">... <a
+                    href="{{ route('post.show', $post->id) }}">Read more</a></span>
         @endif
     </p>
 
     <div class="flex items-center space-x-4 mb-4">
         <div class="flex items-center space-x-1 text-gray-500">
-            <x-like-empty />
+            @if(auth()->user()->likes->contains('post_id', $post->id))
+                <x-like-filled/>
+            @else
+                <x-like-empty/>
+            @endif
             <span>{{ $post->likes->count() }}</span>
         </div>
         <div class="flex items-center space-x-1 text-gray-500">
-            <x-dislike-empty />
+            @if(auth()->user()->dislikes->contains('post_id', $post->id))
+                <x-dislike-filled/>
+            @else
+                <x-dislike-empty/>
+            @endif
             <span>{{ $post->dislikes->count() }}</span>
         </div>
         <div class="flex items-center space-x-1 text-gray-500">
-            <x-comment />
+            <x-comment/>
             <span>{{ $post->comments->count() }}</span>
         </div>
     </div>

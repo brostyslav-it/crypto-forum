@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,11 @@ Route::controller(PostController::class)->group(function () {
 Route::controller(CommentController::class)->group(function () {
     Route::post('/comment', 'store')->name('comment.post');
     Route::delete('/comment/{comment}', 'destroy')->name('comment.destroy');
+});
+
+Route::controller(LikeController::class)->group(function () {
+    Route::post('/like/post/{post}', 'store')->name('like.store');
+    Route::delete('/like/post/{post}', 'destroy')->name('like.destroy');
 });
 
 Route::view('/', 'posts', ['categories' => Category::all()])->name('posts.view');
