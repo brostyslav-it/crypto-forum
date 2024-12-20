@@ -1,17 +1,13 @@
 <header class="w-full bg-gray-900 text-white shadow-lg">
     <div class="container mx-auto px-6 py-6 flex justify-between items-center">
         <div class="flex items-center space-x-4">
-            <a href="/">
-                <img src="/logo/btc.png" alt="Logo" class="w-10 h-10 object-cover">
-            </a>
+            <a href="/"><img src="/logo/btc.png" alt="Logo" class="w-10 h-10 object-cover"></a>
             <a href="/" class="text-3xl font-extrabold tracking-wide">CryptoForum</a>
         </div>
 
         <button class="block lg:hidden focus:outline-none" id="nav-toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="35" viewBox="0 0 50 50"
-                 style="fill:#FFFFFF;">
-                <path
-                    d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 Z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 Z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 Z"></path>
+            <svg class="w-[40px] h-[40px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2.5" d="M5 7h14M5 12h14M5 17h14"/>
             </svg>
         </button>
 
