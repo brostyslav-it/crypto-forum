@@ -1,3 +1,8 @@
+@php
+    use App\Models\Dislike;
+    use App\Models\Like;
+    $postsIds = auth()->user()->posts->pluck('id')->all();
+@endphp
 <x-layout>
     <x-slot:title>Profile</x-slot>
 
@@ -23,20 +28,35 @@
                         <p class="text-gray-600 text-lg">{{ auth()->user()->email }}</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                        <div class="bg-blue-50 rounded-lg shadow p-4 text-center">
-                            <h3 class="text-xl font-bold text-blue-600">Posts</h3>
-                            <p class="text-gray-700 text-lg">{{ auth()->user()->posts->count() }}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                        <div class="bg-blue-50 rounded-lg shadow p-3 text-center h-24 flex flex-col justify-center hover:shadow-md hover:bg-blue-100 transition">
+                            <h3 class="text-sm font-bold text-blue-600">Posts</h3>
+                            <p class="text-gray-800 font-semibold text-lg">{{ auth()->user()->posts->count() }}</p>
                         </div>
 
-                        <div class="bg-green-50 rounded-lg shadow p-4 text-center">
-                            <h3 class="text-xl font-bold text-green-600">Followers</h3>
-                            <p class="text-gray-700 text-lg">{{ $stats['followers'] ?? 0 }}</p>
+                        <div class="bg-yellow-50 rounded-lg shadow p-3 text-center h-24 flex flex-col justify-center hover:shadow-md hover:bg-yellow-100 transition">
+                            <h3 class="text-sm font-bold text-yellow-600">Comments</h3>
+                            <p class="text-gray-800 font-semibold text-lg">{{ auth()->user()->comments->count() }}</p>
                         </div>
 
-                        <div class="bg-yellow-50 rounded-lg shadow p-4 text-center">
-                            <h3 class="text-xl font-bold text-yellow-600">Comments</h3>
-                            <p class="text-gray-700 text-lg">{{ auth()->user()->comments->count() }}</p>
+                        <div class="bg-green-50 rounded-lg shadow p-3 text-center h-24 flex flex-col justify-center hover:shadow-md hover:bg-green-100 transition">
+                            <h3 class="text-sm font-bold text-green-600">Likes Sent</h3>
+                            <p class="text-gray-800 font-semibold text-lg">{{ auth()->user()->likes->count() }}</p>
+                        </div>
+
+                        <div class="bg-red-50 rounded-lg shadow p-3 text-center h-24 flex flex-col justify-center hover:shadow-md hover:bg-red-100 transition">
+                            <h3 class="text-sm font-bold text-red-600">Dislikes Sent</h3>
+                            <p class="text-gray-800 font-semibold text-lg">{{ auth()->user()->dislikes->count() }}</p>
+                        </div>
+
+                        <div class="bg-indigo-50 rounded-lg shadow p-3 text-center h-24 flex flex-col justify-center hover:shadow-md hover:bg-indigo-100 transition">
+                            <h3 class="text-sm font-bold text-indigo-600">Post Likes</h3>
+                            <p class="text-gray-800 font-semibold text-lg">{{ Like::whereIn('post_id', $postsIds)->count() }}</p>
+                        </div>
+
+                        <div class="bg-purple-50 rounded-lg shadow p-3 text-center h-24 flex flex-col justify-center hover:shadow-md hover:bg-purple-100 transition">
+                            <h3 class="text-sm font-bold text-purple-600">Post Dislikes</h3>
+                            <p class="text-gray-800 font-semibold text-lg">{{ Dislike::whereIn('post_id', $postsIds)->count() }}</p>
                         </div>
                     </div>
 

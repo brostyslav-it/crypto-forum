@@ -25,4 +25,22 @@ class ProfileController extends Controller
 
         return view('edit-profile');
     }
+
+    public function update(): RedirectResponse
+    {
+        $validatedUser = request()->validate([
+            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            'name' => 'required|string|max:255|no_forbidden_words',
+            'image' => 'nullable|image|max:8092',
+        ]);
+        $user = Auth::user();
+
+        if (request()->hasFile('image')) {
+            $user->avatar = request()->file('image')->store('avatars', 'public_uploads');
+            unset($validatedUser['image']);
+        }
+        $user->update($validatedUser);
+
+        return to_route('profile.view');
+    }
 }

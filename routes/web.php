@@ -18,6 +18,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'showProfile')->name('profile.view');
     Route::get('/edit-profile', 'showEditProfile')->name('profile.edit.view');
+    Route::put('/edit-profile', 'update')->name('profile.update');
 });
 
 Route::controller(PostController::class)->group(function () {
