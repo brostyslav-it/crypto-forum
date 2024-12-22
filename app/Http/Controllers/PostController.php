@@ -27,7 +27,11 @@ class PostController extends Controller
 
     public function showAll(): View
     {
-        return view('posts', ['categories' => Category::all()]);
+        return view('posts', ['categories' => Category::with(['posts' => function($query) {
+            if ($search = request()->input('search')) {
+                $query->where('title', 'like', '%' . $search . '%')->orWhere('content', 'like', '%' . $search . '%');
+            }
+        }])->get()]);
     }
 
     public function show(Post $post): View
