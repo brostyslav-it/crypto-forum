@@ -19,11 +19,16 @@
         @can('modify-post', $post)
             <div class="bg-blue-100 p-4 rounded-lg mb-6">
                 <div class="flex justify-center space-x-10">
-                    <a href="{{ route('post.edit', $post->id) }}" class="text-blue-500 hover:text-blue-700"><x-edit /></a>
-                    <form action="{{ route('post.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                    <a href="{{ route('post.edit', $post->id) }}" class="text-blue-500 hover:text-blue-700">
+                        <x-edit/>
+                    </a>
+                    <form action="{{ route('post.destroy', $post->id) }}" method="POST"
+                          onsubmit="return confirm('Are you sure you want to delete this post?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-red-500 hover:text-red-700"><x-delete /></button>
+                        <button type="submit" class="text-red-500 hover:text-red-700">
+                            <x-delete/>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -34,7 +39,11 @@
             <div class="flex justify-center space-x-10 text-gray-600">
                 <div class="flex items-center gap-2 cursor-pointer transition-shadow">
                     <section id="like-for-{{ $post->id }}">
-                        @if(auth()->user()->likes->contains('post_id', $post->id))
+                        @if(!auth()->check())
+                            <x-login-link>
+                                <x-like-empty/>
+                            </x-login-link>
+                        @elseif(auth()->user()->likes->contains('post_id', $post->id))
                             <x-like-filled onclick="like({{ $post->id }})"/>
                         @else
                             <x-like-empty onclick="like({{ $post->id }})"/>
@@ -45,7 +54,11 @@
 
                 <div class="flex items-center gap-2">
                     <section id="dislike-for-{{ $post->id }}">
-                        @if(auth()->user()->dislikes->contains('post_id', $post->id))
+                        @if(!auth()->check())
+                            <x-login-link>
+                                <x-dislike-empty/>
+                            </x-login-link>
+                        @elseif(auth()->user()->dislikes->contains('post_id', $post->id))
                             <x-dislike-filled onclick="dislike({{ $post->id }})"/>
                         @else
                             <x-dislike-empty onclick="dislike({{ $post->id }})"/>
@@ -55,7 +68,7 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <x-comment />
+                    <x-comment/>
                     <span>{{ $post->comments->count() }}</span>
                 </div>
             </div>
@@ -71,7 +84,8 @@
                     @foreach($post->comments as $comment)
                         <div class="bg-gray-100 p-4 rounded-lg flex items-start">
                             <div class="w-12 h-12 mr-4">
-                                <img src="/{{ $comment->user->avatar }}" alt="User Avatar" class="w-full h-full rounded-full object-cover">
+                                <img src="/{{ $comment->user->avatar }}" alt="User Avatar"
+                                     class="w-full h-full rounded-full object-cover">
                             </div>
 
                             <div class="flex-1">
@@ -82,10 +96,13 @@
 
                             @can('delete-comment', $comment)
                                 <div class="ml-4">
-                                    <form action="{{ route('comment.destroy', $comment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?')">
+                                    <form action="{{ route('comment.destroy', $comment->id) }}" method="POST"
+                                          onsubmit="return confirm('Are you sure you want to delete this comment?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"><x-delete /></button>
+                                        <button type="submit">
+                                            <x-delete/>
+                                        </button>
                                     </form>
                                 </div>
                             @endcan
@@ -103,7 +120,9 @@
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <div class="mb-4">
                         <x-label for="comment">Your Comment</x-label>
-                        <textarea id="comment" name="content" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>{{ old('content') }}</textarea>
+                        <textarea id="comment" name="content" rows="4"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                  required>{{ old('content') }}</textarea>
                         @error('content')
                         <x-form-error>{{ $message }}</x-form-error>
                         @enderror

@@ -26,7 +26,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                         <div class="bg-blue-50 rounded-lg shadow p-4 text-center">
                             <h3 class="text-xl font-bold text-blue-600">Posts</h3>
-                            <p class="text-gray-700 text-lg">{{ $stats['posts'] ?? 0 }}</p>
+                            <p class="text-gray-700 text-lg">{{ auth()->user()->posts->count() }}</p>
                         </div>
 
                         <div class="bg-green-50 rounded-lg shadow p-4 text-center">
@@ -36,7 +36,7 @@
 
                         <div class="bg-yellow-50 rounded-lg shadow p-4 text-center">
                             <h3 class="text-xl font-bold text-yellow-600">Comments</h3>
-                            <p class="text-gray-700 text-lg">{{ $stats['comments'] ?? 0 }}</p>
+                            <p class="text-gray-700 text-lg">{{ auth()->user()->comments->count() }}</p>
                         </div>
                     </div>
 

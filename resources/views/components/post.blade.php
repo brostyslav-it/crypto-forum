@@ -6,14 +6,17 @@
     <p class="text-gray-600 mb-4">
         {{ Str::limit($post->content, 150) }}
         @if(strlen($post->content) > 150)
-            <span class="text-blue-500 font-semibold">... <a href="{{ route('post.show', $post->id) }}">Read more</a></span>
+            <span class="text-blue-500 font-semibold">... <a
+                    href="{{ route('post.show', $post->id) }}">Read more</a></span>
         @endif
     </p>
 
     <div class="flex items-center space-x-4 mb-4">
         <div class="flex items-center space-x-1 text-gray-500">
             <section id="like-for-{{ $post->id }}">
-                @if(auth()->user()->likes->contains('post_id', $post->id))
+                @if(!auth()->check())
+                    <x-login-link><x-like-empty/></x-login-link>
+                @elseif(auth()->user()->likes->contains('post_id', $post->id))
                     <x-like-filled onclick="like({{ $post->id }})"/>
                 @else
                     <x-like-empty onclick="like({{ $post->id }})"/>
@@ -23,7 +26,9 @@
         </div>
         <div class="flex items-center space-x-1 text-gray-500">
             <section id="dislike-for-{{ $post->id }}">
-                @if(auth()->user()->dislikes->contains('post_id', $post->id))
+                @if(!auth()->check())
+                    <x-login-link><x-dislike-empty/></x-login-link>
+                @elseif(auth()->user()->dislikes->contains('post_id', $post->id))
                     <x-dislike-filled onclick="dislike({{ $post->id }})"/>
                 @else
                     <x-dislike-empty onclick="dislike({{ $post->id }})"/>

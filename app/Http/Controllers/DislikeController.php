@@ -12,7 +12,7 @@ class DislikeController extends Controller
     public function store(Post $post): JsonResponse|RedirectResponse
     {
         if (!Auth::check()) {
-            return to_route('login.view');
+            abort(403);
         }
         $likeDeleted = false;
 
