@@ -16,18 +16,22 @@
             <h1 class="text-3xl font-bold text-center text-gray-700 mb-6">Posts by Category</h1>
         @endif
 
-        @foreach($categories as $category)
-            <div class="mb-8">
-                <x-category>{{ $category->name }}</x-category>
+        @if(!$categories->isEmpty())
+            @foreach($categories as $category)
+                <div class="mb-8">
+                    <x-category>{{ $category->name }}</x-category>
 
-                @if ($category->posts->isEmpty())
-                    <p class="text-center text-gray-500 text-lg">No posts available in this category.</p>
-                @else
-                    @foreach($category->posts as $post)
-                        <x-post :post="$post"/>
-                    @endforeach
-                @endif
-            </div>
-        @endforeach
+                    @if ($category->posts->isEmpty())
+                        <p class="text-center text-gray-500 text-lg">No posts available in this category.</p>
+                    @else
+                        @foreach($category->posts as $post)
+                            <x-post :post="$post"/>
+                        @endforeach
+                    @endif
+                </div>
+            @endforeach
+        @else
+            <h3 class="text-xl font-bold text-center italic text-red-700 mb-6 mt-6">There is no posts or categories.</h3>
+        @endif
     </div>
 </x-layout>

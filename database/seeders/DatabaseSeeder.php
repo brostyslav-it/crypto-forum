@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Create an admin user
+        User::create([
+            'email' => 'admin@admin.com',
+            'name' => 'Admin',
+            'avatar' => 'avatars/default.png',
+            'password' => env('ADMIN_PASSWORD'),
+            'is_admin' => true,
         ]);
+
+        Category::create(['name' => 'Bitcoin']);
+        Category::create(['name' => 'Ethereum']);
+        Category::create(['name' => 'Blockchain']);
+        Category::create(['name' => 'DeFi (Decentralized Finance)']);
+        Category::create(['name' => 'NFTs (Non-Fungible Tokens)']);
+        Category::create(['name' => 'Smart Contracts']);
+        Category::create(['name' => 'Mining']);
+        Category::create(['name' => 'Wallets']);
+        Category::create(['name' => 'Crypto Exchanges']);
+        Category::create(['name' => 'Staking']);
     }
 }
