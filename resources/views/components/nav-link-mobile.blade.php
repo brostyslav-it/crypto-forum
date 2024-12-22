@@ -1,1 +1,1 @@
-<a {{ $attributes }} class="block text-white hover:text-blue-400 transition">{{ $slot }}</a>
+<a {{ $attributes }} class="text-yellow-500 hover:text-yellow-400 font-semibold text-xl block transition">{{ $slot }}</a>
