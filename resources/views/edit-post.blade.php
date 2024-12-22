@@ -38,6 +38,14 @@
             </div>
 
             <div class="mb-4">
+                <x-label for="tags">Tags (Optional)</x-label>
+                <x-input type="text" id="tags" name="tags" value="{{ old('tags', $post->tags->pluck('name')->join(',')) }}" placeholder="btc,eth,sol,scam,dex"/>
+                @error('tags')
+                <x-form-error>{{ $message }}</x-form-error>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <x-label for="category">Category</x-label>
                 <select
                     id="category"

@@ -16,18 +16,33 @@
             {{ $post->content }}
         </div>
 
+        <div class="mb-6">
+            @if($post->tags->isEmpty())
+                <p class="text-gray-500 italic">No tags available for this post.</p>
+            @else
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Tags:</h3>
+                <div class="flex flex-wrap gap-2">
+                    @foreach($post->tags as $tag)
+                        <span class="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-semibold">
+                            {{ $tag->name }}
+                        </span>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
         @can('modify-post', $post)
             <div class="bg-blue-100 p-4 rounded-lg mb-6">
                 <div class="flex justify-center space-x-10">
                     <a href="{{ route('post.edit', $post->id) }}" class="text-blue-500 hover:text-blue-700">
-                        <x-edit/>
+                        <x-edit />
                     </a>
                     <form action="{{ route('post.destroy', $post->id) }}" method="POST"
                           onsubmit="return confirm('Are you sure you want to delete this post?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-red-500 hover:text-red-700">
-                            <x-delete/>
+                            <x-delete />
                         </button>
                     </form>
                 </div>
@@ -41,12 +56,12 @@
                     <section id="like-for-{{ $post->id }}">
                         @if(!auth()->check())
                             <x-login-link>
-                                <x-like-empty/>
+                                <x-like-empty />
                             </x-login-link>
                         @elseif(auth()->user()->likes->contains('post_id', $post->id))
-                            <x-like-filled onclick="like({{ $post->id }})"/>
+                            <x-like-filled onclick="like({{ $post->id }})" />
                         @else
-                            <x-like-empty onclick="like({{ $post->id }})"/>
+                            <x-like-empty onclick="like({{ $post->id }})" />
                         @endif
                     </section>
                     <span id="like-count-{{ $post->id }}">{{ $post->likes->count() }}</span>
@@ -56,19 +71,19 @@
                     <section id="dislike-for-{{ $post->id }}">
                         @if(!auth()->check())
                             <x-login-link>
-                                <x-dislike-empty/>
+                                <x-dislike-empty />
                             </x-login-link>
                         @elseif(auth()->user()->dislikes->contains('post_id', $post->id))
-                            <x-dislike-filled onclick="dislike({{ $post->id }})"/>
+                            <x-dislike-filled onclick="dislike({{ $post->id }})" />
                         @else
-                            <x-dislike-empty onclick="dislike({{ $post->id }})"/>
+                            <x-dislike-empty onclick="dislike({{ $post->id }})" />
                         @endif
                     </section>
                     <span id="dislike-count-{{ $post->id }}">{{ $post->dislikes->count() }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <x-comment/>
+                    <x-comment />
                     <span>{{ $post->comments->count() }}</span>
                 </div>
             </div>
@@ -101,7 +116,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit">
-                                            <x-delete/>
+                                            <x-delete />
                                         </button>
                                     </form>
                                 </div>

@@ -11,6 +11,21 @@
         @endif
     </p>
 
+    <div class="mb-4">
+        @if($post->tags->isEmpty())
+            <p class="text-gray-500 italic">No tags available for this post.</p>
+        @else
+            <h3 class="text-sm font-medium text-gray-700 mb-2">Tags:</h3>
+            <div class="flex flex-wrap gap-2">
+                @foreach($post->tags as $tag)
+                    <span class="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-semibold">
+                    {{ $tag->name }}
+                </span>
+                @endforeach
+            </div>
+        @endif
+    </div>
+
     <div class="flex items-center space-x-4 mb-4">
         <div class="flex items-center space-x-1 text-gray-500">
             <section id="like-for-{{ $post->id }}">

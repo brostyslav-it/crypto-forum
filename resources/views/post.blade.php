@@ -17,18 +17,31 @@
 
             <div class="mb-4">
                 <x-label for="content">Content</x-label>
-                <textarea id="content" name="content" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>{{ old('content') }}</textarea>
+                <textarea id="content" name="content" rows="5"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          required>{{ old('content') }}</textarea>
                 @error('content')
                 <x-form-error>{{ $message }}</x-form-error>
                 @enderror
             </div>
 
             <div class="mb-4">
+                <x-label for="tags">Tags (Optional)</x-label>
+                <x-input type="text" id="tags" name="tags" value="{{ old('tags') }}" placeholder="btc,eth,sol,scam,dex"/>
+                @error('tags')
+                <x-form-error>{{ $message }}</x-form-error>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <x-label for="category_id">Category</x-label>
-                <select id="category_id" name="category_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                <select id="category_id" name="category_id"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required>
                     <option value="" disabled selected>Select Category</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                        <option
+                            value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
                 @error('category_id')

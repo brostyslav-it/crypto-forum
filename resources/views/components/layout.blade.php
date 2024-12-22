@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         function updateFileName() {
-            const input = document.getElementById('avatar');
+            const input = document.getElementById('image');
             document.getElementById('file-name').textContent = input.files.length ? input.files[0].name : 'No file chosen';
         }
 
