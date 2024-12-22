@@ -57,7 +57,7 @@ class PostController extends Controller
             'content' => $validatedPost['content'],
             'category_id' => $validatedPost['category_id'],
             'user_id' => Auth::id(),
-            'image' => $request->hasFile('image') ? $request->file('image')->store('posts', 'public_uploads') : null
+            'image' => $request->hasFile('image') ? $request->file('image')->store('images', 'public_uploads') : null
         ]);
 
         if (!empty($validatedPost['tags'])) {

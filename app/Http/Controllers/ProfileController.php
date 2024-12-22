@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -36,6 +37,10 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if (request()->hasFile('image')) {
+            if ($user->avatar) {
+                Storage::disk('public_uploads')->delete($user->avatar);
+            }
+
             $user->avatar = request()->file('image')->store('avatars', 'public_uploads');
             unset($validatedUser['image']);
         }

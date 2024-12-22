@@ -39,7 +39,7 @@ class AuthController extends Controller
         ]);
 
         $validatedUser['avatar'] = request()->hasFile('image')
-            ? request()->file('image')->store('image', 'public_uploads')
+            ? request()->file('image')->store('avatars', 'public_uploads')
             : self::DEFAULT_AVATAR;
         unset($validatedUser['image']);
 
