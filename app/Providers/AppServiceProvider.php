@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('delete-comment', fn(User $user, Comment $comment) => ($user->id === $comment->user_id) || $user->is_admin);
         Gate::define('modify-post', fn(User $user, Post $post) => ($user->id === $post->user_id) || $user->is_admin);
+        Gate::define('create-category', fn(User $user) => $user->is_admin || $user->posts()->count() >= 10);
 
         Validator::extend('no_forbidden_words', function ($attribute, $value, $parameters, $validator) {
             $forbiddenWords = ForbiddenWord::all()->pluck('word')->toArray();
