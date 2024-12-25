@@ -32,6 +32,8 @@ Route::controller(PostController::class)->group(function () {
     Route::delete('/post/{post}', 'destroy')->name('post.destroy');
     Route::get('/post/{post}/edit', 'edit')->name('post.edit');
     Route::put('/post/{post}', 'update')->name('post.update');
+
+    Route::get('/views-demo', 'showAnalyticsPage')->name('analytics');
 });
 
 Route::controller(CommentController::class)->group(function () {

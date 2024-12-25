@@ -128,4 +128,13 @@ class PostController extends Controller
         ))->map(fn(string $name) => Tag::firstOrCreate(['name' => $name])
         )->pluck('id');
     }
+
+    public function showAnalyticsPage(): View
+    {
+        $topPosts = DB::table('view_top_posts')->get();
+        $userActivity = DB::table('view_user_activity')->get();
+        $postDetails = DB::table('view_post_details')->get();
+
+        return view('views-demo', compact('topPosts', 'userActivity', 'postDetails'));
+    }
 }
