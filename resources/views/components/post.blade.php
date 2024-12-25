@@ -11,6 +11,10 @@
         @endif
     </p>
 
+    <div class="mb-4 bg-blue-100 p-4 rounded-lg">
+        <b class="text-sm font-medium text-blue-800">Category: {{ $post->category->name }}</b>
+    </div>
+
     <div class="mb-4">
         @if($post->tags->isEmpty())
             <p class="text-gray-500 italic">No tags available for this post.</p>
