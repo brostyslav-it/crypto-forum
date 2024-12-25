@@ -16,6 +16,9 @@
             @if (auth()->check())
                 <x-nav-link-desktop href="{{ route('profile.view') }}" >Profile</x-nav-link-desktop>
                 <x-nav-link-desktop href="{{ route('post.view') }}">Create a post</x-nav-link-desktop>
+                @can('create-category')
+                    <x-nav-link-desktop href="{{ route('category.create') }}">Create a category</x-nav-link-desktop>
+                @endcan
                 <x-nav-link-desktop href="{{ route('top-users.show') }}">Most active users</x-nav-link-desktop>
                 <form action="{{ route('logout.post') }}" method="POST" class="inline">
                     @csrf
@@ -34,6 +37,9 @@
             @if (auth()->check())
                 <x-nav-link-mobile href="{{ route('profile.view') }}">Profile</x-nav-link-mobile>
                 <x-nav-link-mobile href="{{ route('post.view') }}">Create a post</x-nav-link-mobile>
+                @can('create-category')
+                    <x-nav-link-mobile href="{{ route('category.create') }}">Create a category</x-nav-link-mobile>
+                @endcan
                 <x-nav-link-mobile  href="{{ route('top-users.show') }}">Most active users</x-nav-link-mobile>
                 <form action="{{ route('logout.post') }}" method="POST">
                     @csrf

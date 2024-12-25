@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -42,3 +43,5 @@ Route::controller(ReactionsController::class)->group(function () {
     Route::post('/like/post/{post}', 'storeLike')->name('like.store');
     Route::post('/dislike/post/{post}', 'storeDislike')->name('dislike.store');
 });
+
+Route::resource('category', CategoryController::class)->only(['create', 'store']);
