@@ -1,6 +1,7 @@
 @php
     use App\Models\Dislike;
     use App\Models\Like;
+    use Illuminate\Support\Facades\DB;
     $postsIds = $user->posts->pluck('id')->all();
     $title = $current ? 'Your' : $user->name . '\'s';
 @endphp
@@ -87,6 +88,9 @@
             <p class="text-center text-gray-500 text-lg">No posts available.</p>
         @else
             @foreach($user->posts as $post)
+                @php
+                    $post->popularity_score = DB::select('CALL CalculatePostPopularity(?)', [$post->id])[0]->score ?? 0;
+                @endphp
                 <x-post :post="$post"/>
             @endforeach
         @endif

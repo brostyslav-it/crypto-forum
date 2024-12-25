@@ -12,7 +12,8 @@
     </p>
 
     <div class="mb-4 bg-blue-100 p-4 rounded-lg">
-        <b class="text-sm font-medium text-blue-800">Category: {{ $post->category->name }}</b>
+        <h1 class="text-sm font-medium text-blue-800">Category: {{ $post->category->name }}</h1>
+        <h1 class="text-sm font-medium text-blue-800">Popularity score: {{ $post->popularity_score }}</h1>
     </div>
 
     <div class="mb-4">

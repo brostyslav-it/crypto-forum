@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -27,14 +28,23 @@ class PostController extends Controller
 
     public function showAll(): View
     {
-        return view('posts', ['posts' => Post::when($search = request()->input('search'), function ($query) use ($search) {
+        $posts = Post::when($search = request()->input('search'), function ($query) use ($search) {
             $query->where('title', 'like', '%' . $search . '%')
                 ->orWhere('content', 'like', '%' . $search . '%');
-        })->get()]);
+        })->get();
+
+        $postsWithScores = $posts->map(function (Post $post) {
+            $post->popularity_score = DB::select('CALL CalculatePostPopularity(?)', [$post->id])[0]->score ?? 0;
+            return $post;
+        });
+
+        return view('posts', ['posts' => $postsWithScores]);
     }
 
     public function show(Post $post): View
     {
+        $post->users_liked = DB::select('CALL GetUsersWhoLikedPost(?)', [$post->id]);
+        $post->popularity_score = DB::select('CALL CalculatePostPopularity(?)', [$post->id])[0]->score ?? 0;
         return view('show-post', ['post' => $post]);
     }
 

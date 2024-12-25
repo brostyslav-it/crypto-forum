@@ -31,6 +31,10 @@
             @endif
         </div>
 
+        <div class="bg-yellow-100 p-4 rounded-lg mb-6">
+            <b class="text-gray-700 text-xl font-bold">Popularity Score: {{ $post->popularity_score }}</b>
+        </div>
+
         @can('modify-post', $post)
             <div class="bg-blue-100 p-4 rounded-lg mb-6">
                 <div class="flex justify-center space-x-10">
@@ -86,6 +90,33 @@
                     <x-comment/>
                     <span>{{ $post->comments->count() }}</span>
                 </div>
+            </div>
+        </div>
+
+        <div>
+            <button onclick="toggleUsersLiked()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                View Users Who Liked This Post
+            </button>
+        </div>
+
+        <div id="users-liked-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden">
+            <div class="bg-white w-11/12 max-w-2xl mx-auto mt-20 p-6 rounded-lg shadow-lg relative">
+                <button onclick="toggleUsersLiked()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    &times;
+                </button>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Users Who Liked This Post</h3>
+                <ul class="space-y-2">
+                    @forelse($post->users_liked as $user)
+                        <li class="flex items-center space-x-4">
+                            <img src="/{{ $user->user_avatar }}" alt="{{ $user->user_name }}" class="w-8 h-8 rounded-full object-cover">
+                            <a href="{{ route('profile.show', $user->user_id) }}" class="text-blue-500 hover:underline">
+                                {{ $user->user_name }}
+                            </a>
+                        </li>
+                    @empty
+                        <p class="text-gray-600">No users have liked this post yet.</p>
+                    @endforelse
+                </ul>
             </div>
         </div>
 
@@ -152,3 +183,9 @@
         @endauth
     </div>
 </x-layout>
+<script>
+    function toggleUsersLiked() {
+        const modal = document.getElementById('users-liked-modal');
+        modal.classList.toggle('hidden');
+    }
+</script>
