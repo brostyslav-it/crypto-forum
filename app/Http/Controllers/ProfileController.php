@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class ProfileController extends Controller
             return to_route('login.view');
         }
 
-        return view('profile');
+        return view('user-profile', ['user' => Auth::user(), 'current' => true]);
     }
 
     public function showEditProfile(): View|RedirectResponse
@@ -47,5 +48,31 @@ class ProfileController extends Controller
         $user->update($validatedUser);
 
         return to_route('profile.view');
+    }
+
+    public function showUserProfile(User $user): View|RedirectResponse
+    {
+        if ($user->id === Auth::id()) {
+            return to_route('profile.view');
+        }
+
+        return view('user-profile', ['user' => $user, 'current' => false]);
+    }
+
+    public function topActiveUsers(): View|RedirectResponse
+    {
+        if (!Auth::check()) {
+            return to_route('login.view');
+        }
+
+        return view('most-active-users', ['users' => User::withCount(['posts', 'comments', 'likes', 'dislikes'])
+            ->having('posts_count', '>', 0)
+            ->orderByDesc('posts_count')
+            ->orderByDesc('comments_count')
+            ->orderByDesc('likes_count')
+            ->orderBy('dislikes_count')
+            ->limit(10)
+            ->get()
+        ]);
     }
 }

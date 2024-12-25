@@ -35,14 +35,14 @@
             <div class="bg-blue-100 p-4 rounded-lg mb-6">
                 <div class="flex justify-center space-x-10">
                     <a href="{{ route('post.edit', $post->id) }}" class="text-blue-500 hover:text-blue-700">
-                        <x-edit />
+                        <x-edit/>
                     </a>
                     <form action="{{ route('post.destroy', $post->id) }}" method="POST"
                           onsubmit="return confirm('Are you sure you want to delete this post?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-red-500 hover:text-red-700">
-                            <x-delete />
+                            <x-delete/>
                         </button>
                     </form>
                 </div>
@@ -56,12 +56,12 @@
                     <section id="like-for-{{ $post->id }}">
                         @if(!auth()->check())
                             <x-login-link>
-                                <x-like-empty />
+                                <x-like-empty/>
                             </x-login-link>
                         @elseif(auth()->user()->likes->contains('post_id', $post->id))
-                            <x-like-filled onclick="like({{ $post->id }})" />
+                            <x-like-filled onclick="like({{ $post->id }})"/>
                         @else
-                            <x-like-empty onclick="like({{ $post->id }})" />
+                            <x-like-empty onclick="like({{ $post->id }})"/>
                         @endif
                     </section>
                     <span id="like-count-{{ $post->id }}">{{ $post->likes->count() }}</span>
@@ -71,19 +71,19 @@
                     <section id="dislike-for-{{ $post->id }}">
                         @if(!auth()->check())
                             <x-login-link>
-                                <x-dislike-empty />
+                                <x-dislike-empty/>
                             </x-login-link>
                         @elseif(auth()->user()->dislikes->contains('post_id', $post->id))
-                            <x-dislike-filled onclick="dislike({{ $post->id }})" />
+                            <x-dislike-filled onclick="dislike({{ $post->id }})"/>
                         @else
-                            <x-dislike-empty onclick="dislike({{ $post->id }})" />
+                            <x-dislike-empty onclick="dislike({{ $post->id }})"/>
                         @endif
                     </section>
                     <span id="dislike-count-{{ $post->id }}">{{ $post->dislikes->count() }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <x-comment />
+                    <x-comment/>
                     <span>{{ $post->comments->count() }}</span>
                 </div>
             </div>
@@ -98,13 +98,17 @@
                 <div class="space-y-4">
                     @foreach($post->comments as $comment)
                         <div class="bg-gray-100 p-4 rounded-lg flex items-start">
-                            <div class="w-12 h-12 mr-4">
-                                <img src="/{{ $comment->user->avatar }}" alt="User Avatar"
-                                     class="w-full h-full rounded-full object-cover">
-                            </div>
+                            <a href="{{ route('profile.show', $comment->user->id) }}">
+                                <div class="w-12 h-12 mr-4">
+                                    <img src="/{{ $comment->user->avatar }}" alt="User Avatar"
+                                         class="w-full h-full rounded-full object-cover">
+                                </div>
+                            </a>
 
                             <div class="flex-1">
-                                <p class="text-gray-800 font-semibold">{{ $comment->user->name }}</p>
+                                <a href="{{ route('profile.show', $comment->user->id) }}">
+                                    <p class="text-gray-800 font-semibold">{{ $comment->user->name }}</p>
+                                </a>
                                 <p class="text-gray-700">{{ $comment->content }}</p>
                                 <p class="text-sm text-gray-500 mt-2">{{ $comment->created_at->diffForHumans() }}</p>
                             </div>
@@ -116,7 +120,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit">
-                                            <x-delete />
+                                            <x-delete/>
                                         </button>
                                     </form>
                                 </div>

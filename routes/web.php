@@ -17,8 +17,10 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'showProfile')->name('profile.view');
-    Route::get('/edit-profile', 'showEditProfile')->name('profile.edit.view');
-    Route::put('/edit-profile', 'update')->name('profile.update');
+    Route::get('/profile/{user}', 'showUserProfile')->whereNumber('user')->name('profile.show');
+    Route::get('/most-active-users', 'topActiveUsers')->name('top-users.show');
+    Route::get('/profile/edit', 'showEditProfile')->name('profile.edit.view');
+    Route::put('/profile/edit', 'update')->name('profile.update');
 });
 
 Route::controller(PostController::class)->group(function () {
